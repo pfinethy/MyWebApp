@@ -1,27 +1,32 @@
-import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Signup from "./Signup";
+
+function Home() {
+  return (
+    <div style={{padding:"20px"}}>
+      <h1>Welcome to My Web App</h1>
+
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/signup">Sign Up</Link></li>
+      </ul>
+
+      <img src="/kitten_on_home.png" width="300" />
+    </div>
+  );
+}
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    // Fetching data from the .NET backend
-    fetch('http://localhost:5071/api/tasks')
-      .then(res => res.json())
-      .then(data => setTasks(data))
-      .catch(err => console.error("Backend not running?", err));
-  }, []);
-
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>My Tasks</h1>
-      <ul>
-        {tasks.map(task => (
-          <li key={task.id}>
-            {task.title} {task.isCompleted ? '✅' : '⏳'}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Router>
+      <Routes>
+
+        <Route path="/" element={<Home />} />
+
+        <Route path="/signup" element={<Signup />} />
+
+      </Routes>
+    </Router>
   );
 }
 
